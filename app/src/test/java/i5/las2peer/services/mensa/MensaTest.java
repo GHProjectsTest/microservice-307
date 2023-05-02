@@ -116,6 +116,65 @@ public class MensaTest {
   }
 
 
+  /**
+   * 
+   * Test for the GETdishesidratingsnotfoundtest_ID197273 method.
+   * 
+   */
+  @Test
+  public void testGETdishesidratingsnotfoundtest_ID197273() {
+    MiniClientCoverage c = new MiniClientCoverage(mainPath);
+    c.setConnectorEndpoint(connector.getHttpEndpoint());
+    
+        
+    try {
+      c.setLogin(AnonymousAgentImpl.IDENTIFIER, "");
+      ClientResponse result = c.sendRequest("GET", "/dishes/{id}/ratings", """
+""", "text/plain", "*/*", new HashMap<>(), "99999");
+      System.out.println("Result of request with id: 365574: " + result.getResponse().trim());
+    
+      Assert.assertEquals("[499547]", 404, result.getHttpCode());
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail("Exception: " + e);
+    }
+
+    
+  }
+  /**
+   * 
+   * Test for the Listavailableratingsforadish_ID568080 method.
+   * 
+   */
+  @Test
+  public void testListavailableratingsforadish_ID568080() {
+    MiniClientCoverage c = new MiniClientCoverage(mainPath);
+    c.setConnectorEndpoint(connector.getHttpEndpoint());
+    
+        
+    try {
+      c.setLogin(AnonymousAgentImpl.IDENTIFIER, "");
+      ClientResponse result = c.sendRequest("GET", "/dishes/{id}/ratings", """
+""", "text/plain", "*/*", new HashMap<>(), "1");
+      System.out.println("Result of request with id: 528004: " + result.getResponse().trim());
+      Object response = JSONValue.parse(result.getResponse().trim());
+      // Response body all list entries has field "stars" has type Number
+      assertThat("[242745]", response, both(isA(JSONArray.class)).and(asJSONObjectList(everyItem(both(isA(JSONObject.class)).and(asJSONObject(hasField("stars", isA(Number.class))))))));
+      
+      // Response body has type JSON Array
+      assertThat("[480669]", response, isA(JSONArray.class));
+      
+
+      Assert.assertEquals("[522940]", 200, result.getHttpCode());
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail("Exception: " + e);
+    }
+
+    
+  }
 
 
 
